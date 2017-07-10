@@ -1,0 +1,31 @@
+{
+  "name": "tappy",
+  "description": "TDL Tapster Fork",
+  "version": "1.0.0",
+  "homepage": "http://testdevlab.com/",
+  "author": [
+    {
+      "name": "Guntis",
+      "email": "multi6x@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hugs/tapsterbot.git"
+  },
+  "main": "server.js",
+  "dependencies": {
+    "hapi": "*",
+    "inert": "*",
+    "johnny-five": "*",
+    "path": "*",
+    "request": "*",
+    "socket.io": "*",
+    "sylvester": "*",
+    "temp": "*",
+    "wd": "*"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

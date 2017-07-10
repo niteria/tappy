@@ -1,0 +1,99 @@
+<html ng-app="robotApp">
+
+<head>
+    <title>Robot Control Panel</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/5.9.0/rzslider.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/5.9.0/rzslider.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body ng-controller="IndexController">
+    <fieldset ng-disabled="!conn">
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+                    <a class="navbar-brand" href="/">Robota Control Panel</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#status">Main</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div class="container theme-showcase" role="main">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <h1 id="status" class="page-header">Status</h1>
+                        <div class=" ">
+                            <p>Connected: {{conn}}; IP: {{ ip }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 ">
+
+                        <div class="margin">
+                            <h1 id="movement" class="page-header">Servo Positions</h1>
+                            <div class=" placeholders">
+
+                                <div style="height:200px;overflow:hidden;">
+                                    <div class="col-xs-4 ">s1<br />
+                                        <rzslider rz-slider-model="slider1.value" rz-slider-options="slider1.options"></rzslider>
+                                    </div>
+                                    <div class="col-xs-4 ">s2<br />
+                                        <rzslider rz-slider-model="slider2.value" rz-slider-options="slider2.options"></rzslider>
+                                    </div>
+                                    <div class="col-xs-4 ">s3<br />
+                                        <rzslider rz-slider-model="slider3.value" rz-slider-options="slider3.options"></rzslider>
+                                    </div>
+
+                                </div>
+                                <button ng-click="reset()">reset to default position</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 ">
+
+                        <div class="margin">
+                            <h1 class="page-header">Linear movement</h1>
+                            <div class=" placeholders">
+                                x:
+                                <rzslider rz-slider-model="sliderx.value" rz-slider-options="sliderx.options"></rzslider>
+                                y:
+                                <rzslider rz-slider-model="slidery.value" rz-slider-options="slidery.options"></rzslider>
+                                z:
+                                <rzslider rz-slider-model="sliderz.value" rz-slider-options="sliderz.options"></rzslider>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+    </fieldset>
+</body>
+
+</html>
