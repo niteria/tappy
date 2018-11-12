@@ -2,7 +2,7 @@
   "name": "tappy",
   "description": "TDL Tapster Fork",
   "version": "1.0.0",
-  "homepage": "http://testdevlab.com/",
+  "homepage": "https://testdevlab.com/",
   "author": [
     {
       "name": "Guntis",
@@ -15,16 +15,16 @@
   },
   "main": "server.js",
   "dependencies": {
-    "hapi": "^17.6.0",
-    "inert": "^5.1.0",
-    "johnny-five": "*",
-    "path": "*",
-    "request": "*",
+    "hapi": "^17.7.0",
+    "inert": "^5.1.2",
+    "johnny-five": "1.0.0",
+    "path": "0.12.7",
+    "request": "2.88.0",
     "serialport": "^7.0.2",
-    "socket.io": "*",
-    "sylvester": "*",
-    "temp": "*",
-    "wd": "*"
+    "socket.io": "2.1.1",
+    "sylvester": "0.0.21",
+    "temp": "0.8.3",
+    "wd": "1.11.0"
   },
   "scripts": {
     "start": "node server.js"
