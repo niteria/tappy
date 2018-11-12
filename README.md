@@ -3,7 +3,7 @@ Tappy is a [Tapster](https://github.com/hugs/tapsterbot) based sofware adapted f
 Includes improved calibration method using web browser, web based control panel and record and play tool for automating tests.
 
 # Installation
-Tested with Node.js v7.8.0
+Tested with Node.js v10.11.0
 
 ```sh
 $ git clone https://github.com/guntiss/tappy.git
@@ -24,12 +24,15 @@ To access control panel, navigate to **http://server_ip/control**
 ![Control panel screen](https://preview.ibb.co/kbZKcv/panel.png)
 
 # Calibration
-Connect your phone to same WiFi network as server (make sure there is no AP isolation, otherwise you won't be able to reach it). Navigate to  **http://server_ip/cal**
-Should see this screen:
+Calibration consists of two parts:
+1) Manual servo arm calibration must be done only once after assembling the robot. While rods are detached you can use "Control panel" to adjust all servos for horizontal and vertical arm state, and put those values in config.js accordingly: config.sX = { pin: X, min: 19, max: 101 };
+After this calibration, linear movement should work correctly, if not, something is wrong.
+
+2) Device calibration is done by opening http://server_ip/cal on mobile device web browser. This is needed to be able to work with phone screen coordinates. Make sure that phone recognises stylus touches (it must be grounded to arduino GND) and that screen coordinates are being displayed at server console when touching screen.
+Then you just press "calibrate" and automatic calibration happens, that writes correct values inside calibration.json. You should NOT edit this file manually.
+If during calibration stylus moves outside phone dimensions, decrease config.calWidth value.
+
 ![Calibration screen](https://preview.ibb.co/hRAEAF/calibration.png)
-Verify that screen coordinates ar being displayed at server console when touching screen.
-Press "calibrate" to begin automatic calibration process.
-Make sure there is ground wire from arduino attached to stylus pen, otherwise phone might not register touch event.
 
 # Record And Play
 Navigate to  **http://server_ip/record_and_play**
@@ -37,8 +40,3 @@ You Should see this screen:
 ![Record and play tool](https://preview.ibb.co/bPeucv/rnp.png)
 To use just click on screen and coordinates will be added to textarea.
 Note: realtime screen update is not yet integrated. There is known bug if you stop and restart script.
-
-License
-----
-
-Simplified BSD License
