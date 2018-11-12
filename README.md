@@ -1,20 +1,44 @@
-## Tapster - Mobile Automation Robot
+# About
+Tappy is a [Tapster](https://github.com/hugs/tapsterbot) based sofware adapted for [TestDevLab](http://testdevlab.com) needs.
+Includes improved calibration method using web browser, web based control panel and record and play tool for automating tests.
 
-<span>
-    ![Tapsterbot](http://hugs.github.io/img/tapster-2-desk.jpg)
-</span>
+# Installation
+Tested with Node.js v7.8.0
 
-##Dependencies
-- Node.js
-- One Tapster robot
+```sh
+$ git clone https://github.com/guntiss/tappy.git
+$ cd tappy
+$ npm install
+$ npm start
+```
 
-##Getting Started
+Edit config.js according to your setup (config.pins, defaultPosition height, ..)
 
-1. Download and install the Arduino Client: [http://arduino.cc/en/Guide/HomePage](http://arduino.cc/en/Guide/HomePage)
-2. Follow the setup procedure, and use the "blink" test script to verify your Arduino is working.
-3. From the Arduino IDE upload the "Firmata" script: File -> Open -> Examples > Firmata > StandardFirmata
-4. Install the dependencies: `cd software; npm install`
-5. Start'er up: `node src/bot.js`
-6. Start dancing: `dance()`
-7. Stop dancing: `chill()`
-8. Start moving: `go(0,0,-140)`
+## Robot Control panel
+To access control panel, navigate to **http://server_ip/control**
+
+**Features available:**
+- Servo motor position adjustment
+- Linear movements
+
+![Control panel screen](https://preview.ibb.co/kbZKcv/panel.png)
+
+# Calibration
+Connect your phone to same WiFi network as server (make sure there is no AP isolation, otherwise you won't be able to reach it). Navigate to  **http://server_ip/cal**
+Should see this screen:
+![Calibration screen](https://preview.ibb.co/hRAEAF/calibration.png)
+Verify that screen coordinates ar being displayed at server console when touching screen.
+Press "calibrate" to begin automatic calibration process.
+Make sure there is ground wire from arduino attached to stylus pen, otherwise phone might not register touch event.
+
+# Record And Play
+Navigate to  **http://server_ip/record_and_play**
+You Should see this screen:
+![Record and play tool](https://preview.ibb.co/bPeucv/rnp.png)
+To use just click on screen and coordinates will be added to textarea.
+Note: realtime screen update is not yet integrated. There is known bug if you stop and restart script.
+
+License
+----
+
+Simplified BSD License

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Record and Play tool</title>
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect(null, {
+            forceNew: true,
+            'multiplex': false
+        });
+        socket.emit('getInfo');
+
+        var go = function(x, y, z) {
+            socket.emit('moveScreen', {
+                x: x,
+                y: y,
+                z: z
+            });
+        };
+    </script>
+
+    <style>
+        * {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+            -webkit-touch-callout: none;
+        }
+
+        .screen,
+        .panel {
+            display: inline-block;
+        }
+
+        img {
+            object-fit: cover;
+            width: auto;
+            height: 90vh;
+        }
+
+        .screen {
+            float: left;
+            border: 10px solid #999;
+            margin: 20px;
+            cursor: crosshair;
+        }
+
+        .panel {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #eee;
+            width: auto;
+            min-width: 500px;
+            height: 100%;
+        }
+
+        #deviceInfo {
+          width:400px;
+        }
+
+        textarea {
+            /*min-height: 300px;*/
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="screen">
+        <img id="image" src="/screen.png">
+    </div>
+    <div class="panel">
+        <h3>Settings</h3>
+        Hover z-index: <input id="hover_z" type="text" value=""><br />Touch z-index: <input id="touch_z" type="text" value=""><br />
+        <h4>Ready</h4>
+        <h3>Record and play</h3>
+        <textarea></textarea>
+        <button id="start">start</button>
+        <button id="stop">stop</button>
+        <div id="deviceInfo">Device info not received</div>
+    </div>
+    <script>
+        $(function() {
+            // received info update (probably calibration happened)
+            socket.on('info', function(data) {
+
+                console.log('received info , yes!'+JSON.stringify(data.calibration))
+
+
+                // $('img').width(data.calibration.w);
+                // $('img').height(data.calibration.w);
+
+                // console.log("info update received: " + JSON.stringify(data));
+                $("#touch_z").val(data.contactz);
+                $("#hover_z").val(data.contactz + 6);
+
+                $("#deviceInfo").html(JSON.stringify(data.calibration.device));
+            });
+
+            var touching = false;
+            var img = $('#image');
+
+            var timer = 0;
+            var started = false;
+
+            function tap(x, y, z) {
+                setTimeout(function() {
+                    if (!started) return;
+
+                    socket.emit('tap', {
+                        x: x,
+                        y: y,
+                        // z: z
+                    });
+                }, timer);
+                timer += 800;
+            }
+
+            $("#start").click(function() {
+                started = true;
+                timer = 0;
+                eval($("textarea").val());
+                console.log("started");
+            });
+
+            $("#stop").click(function() {
+                started = false;
+                console.log("stoped");
+            });
+
+
+            $(img).on('load', function(e) {
+                naturalWidth = e.target.naturalWidth;
+            })
+
+            $(img).on('touchstart vmousedown', function(e) {
+                touching = true;
+                ratio = naturalWidth / img.width();
+                x = (event.pageX - img.offset().left) * ratio;
+                y = (event.pageY - img.offset().top) * ratio;
+                update(x, y);
+                addlog(x, y);
+            })
+
+            $(img).on('touchmove vmousemove', function(e) {
+                ratio = naturalWidth / img.width();
+                x = (event.pageX - img.offset().left) * ratio;
+                y = (event.pageY - img.offset().top) * ratio;
+                update(x, y);
+            })
+
+            $(img).on('touchend vmouseup vmouseout', function(e) {
+                touching = false;
+                x = (event.pageX - img.offset().left) * ratio;
+                y = (event.pageY - img.offset().top) * ratio;
+                update(x, y);
+            });
+
+            function update(x, y) {
+                x = x.toFixed();
+                y = y.toFixed();
+                $("h4").text("touch " + touching + " at " + [x, y]);
+                var z = touching ? $("#touch_z").val() : $("#hover_z").val();
+
+                if (!isNaN(z))
+                go(x, y, z);
+            }
+
+            function addlog(x, y) {
+                x = x.toFixed();
+                y = y.toFixed();
+                $("textarea").val($("textarea").val() + "tap(" + x + ", " + y + ");\n");
+            }
+
+            // reload screen image
+            function imgSwap() {
+                // console.log('swaap');
+                // img.src = '/screen.png#' + new Date().getTime();
+                img.attr('src', '/screen.png?' + new Date().getTime());
+            }
+            window.setInterval(imgSwap, 1000);
+
+        });
+    </script>
+</body>
+</html>
