@@ -1,6 +1,6 @@
 var config = {}
 
-// config.port = 80; // override HTTP port
+config.port = 8090; // override HTTP port
 // config.serialport = 'COM3' // override serial port
 
 //Side of end effector
@@ -21,10 +21,10 @@ config.rf_ = 'Math.sqrt(52**2 + 8.5**2)';
 config.rf = 52.690131903421914;
 
 // Specify Servo PIN numbers
-config.pins = [2, 3, 4];
+config.pins = [7, 8, 9];
 
 config.defaultEaseType = "linear";
-config.defaultPosition = [0, 0, -163]; // sis iet uz devaisa konfig
+config.defaultPosition = [75, 75, 75]; // sis iet uz devaisa konfig
 
 //Delay for commands in SVGReader
 //Note that some commands will take longer than this

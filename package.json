@@ -15,8 +15,8 @@
   },
   "main": "server.js",
   "dependencies": {
-    "hapi": "*",
-    "inert": "*",
+    "hapi": "16.7.0",
+    "inert": "4.2.1",
     "johnny-five": "*",
     "path": "*",
     "request": "*",

@@ -88,7 +88,7 @@
             socket.on('info', function(data) {
                 // console.log("info update received: " + JSON.stringify(data));
                 $("#touch_z").val(data.contactz);
-                $("#hover_z").val(data.contactz + 6);
+                $("#hover_z").val(data.contactz + 10);
             });
 
             var touching = false;
@@ -130,23 +130,23 @@
             $(img).on('touchstart vmousedown', function(e) {
                 touching = true;
                 ratio = naturalWidth / img.width();
-                x = (event.pageX - img.offset().left) * ratio;
-                y = (event.pageY - img.offset().top) * ratio;
+                x = (e.pageX - img.offset().left) * ratio;
+                y = (e.pageY - img.offset().top) * ratio;
                 update(x, y);
                 addlog(x, y);
             })
 
             $(img).on('touchmove vmousemove', function(e) {
                 ratio = naturalWidth / img.width();
-                x = (event.pageX - img.offset().left) * ratio;
-                y = (event.pageY - img.offset().top) * ratio;
+                x = (e.pageX - img.offset().left) * ratio;
+                y = (e.pageY - img.offset().top) * ratio;
                 update(x, y);
             })
 
             $(img).on('touchend vmouseup vmouseout', function(e) {
                 touching = false;
-                x = (event.pageX - img.offset().left) * ratio;
-                y = (event.pageY - img.offset().top) * ratio;
+                x = (e.pageX - img.offset().left) * ratio;
+                y = (e.pageY - img.offset().top) * ratio;
                 update(x, y);
             });
 

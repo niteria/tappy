@@ -53,8 +53,8 @@ app.controller('IndexController', function($scope, socket) {
             maxLimit: 190,
             vertical: true,
             rightToLeft: true,
-            floor: 0,
-            ceil: 120,
+            floor: 130,
+            ceil: 175,
             id: '1',
             onChange: function(id, value) {
                 // console.log('on change ' + value); // logs 'on change slider-id'
@@ -70,8 +70,8 @@ app.controller('IndexController', function($scope, socket) {
             maxLimit: 190,
             vertical: true,
             rightToLeft: true,
-            floor: 0,
-            ceil: 120,
+            floor: 130,
+            ceil: 175,
             id: '2',
             onChange: function(id, value) {
                 // console.log('on change ' + value); // logs 'on change slider-id'
@@ -86,8 +86,8 @@ app.controller('IndexController', function($scope, socket) {
             maxLimit: 190,
             vertical: true,
             rightToLeft: true,
-            floor: 0,
-            ceil: 120,
+            floor: 130,
+            ceil: 175,
             id: '3',
             onChange: function(id, value) {
                 // console.log('on change ' + value); // logs 'on change slider-id'
