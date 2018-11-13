@@ -13,7 +13,7 @@ const Hapi = require('hapi');
 
 // Initialize HTTP Server
 const server = Hapi.server({
-	    port: 80,
+	    port: config.port,
 });
 
 const init = async () => {
